@@ -49,6 +49,26 @@
 						</ul>
 					</div>
 					<div class="col-lg-6 col-sm-6 col-4 header-top-right no-padding">
+					
+					<%
+						String userId = (String)request.getSession().getAttribute("username");
+						System.out.println("== >> "+userId);
+						
+						if(userId == null)
+						{
+							%>
+								<label></label>
+							<%
+						}
+						else
+						{
+							%>
+								<label><%= session.getAttribute("username") %></label>
+							<%
+						}
+					
+					%>
+					
 						<a href="tel:+880 1234 654 953">
 							<span class="text">+880 1234 654 953</span>
 						</a>

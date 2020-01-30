@@ -24,7 +24,7 @@
 
 	UserDao udao = new UserDao();
 	udao.connect();
-	int result = udao.saveUser(ub);
+	int result = udao.saveSignUpDetail(ub);
 	
 	if(result == 1) 
 	{ 

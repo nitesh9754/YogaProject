@@ -10,6 +10,9 @@ public class UserBean {
 	private String mobile;
 	private String address;
 	private String comment;
+	private String suitableTime;
+	
+	
 	
 	
 	public String getUserid() {
@@ -59,6 +62,12 @@ public class UserBean {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public String getSuitableTime() {
+		return suitableTime;
+	}
+	public void setSuitableTime(String suitableTime) {
+		this.suitableTime = suitableTime;
 	}
 	
 	

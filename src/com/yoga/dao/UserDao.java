@@ -82,7 +82,7 @@ public class UserDao {
 	}
 	
 	
-	public int saveUser(UserBean user)
+	public int saveSignUpDetail(UserBean user)
 	{
 		int row = 0;
 		
@@ -98,6 +98,43 @@ public class UserDao {
 			if(row == 1)
 			{
 				System.out.println("New User Successfully Registered!");
+			}
+			
+			return row;
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally
+		{
+			Utility.disconnectConnection(con, pstmt, rs, stmt);
+		}
+		
+		return row;
+	}
+	
+	public int addCompleteUserDetail(UserBean user)
+	{
+		int row = 0;
+		
+		try 
+		{
+			pstmt = con.prepareStatement("update userdetail set firstname = ?, lastname = ?, mobile = ?, address = ?, u_comment = ?, suitable_time = ? where userid = ?");
+			pstmt.setString(1, user.getFirstname());
+			pstmt.setString(2, user.getLastname());
+			pstmt.setString(3, user.getMobile());
+			pstmt.setString(4, user.getAddress());
+			pstmt.setString(5, user.getComment());
+			pstmt.setString(6, user.getSuitableTime());
+			pstmt.setString(7, user.getUserid());
+			
+			
+			row = pstmt.executeUpdate();
+			
+			if(row == 1)
+			{
+				System.out.println("User Successfully Updated!");
 			}
 			
 			return row;

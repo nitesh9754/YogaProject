@@ -25,24 +25,29 @@
  	System.out.println("comment " + comment);
 
 	UserBean ub = new UserBean();
-// 	ub.setUserid(userid);
-// 	ub.setEmail(email);
-// 	ub.setPassword(password);
-
-// 	UserDao udao = new UserDao();
-// 	udao.connect();
-// 	int result = udao.saveUser(ub);
+	ub.setUserid(session.getAttribute("username").toString());
+	ub.setFirstname(request.getParameter("firstname"));
+	ub.setLastname(request.getParameter("lastname"));
+	ub.setMobile(request.getParameter("phone"));
+	ub.setAddress(request.getParameter("address"));
+	ub.setComment(request.getParameter("comment"));
+	ub.setSuitableTime(request.getParameter("suitabletime"));
 	
-// 	if(result == 1) 
-// 	{ 
-// 		session.setAttribute("result","New User Successfully Registered!"); 
-// 		response.sendRedirect("register.jsp#toregister"); 
-// 	} 
-// 	else 
-// 	{
-// 		session.setAttribute("result","New User Registration failed!"); 
-// 		response.sendRedirect("register.jsp#toregister");
-// 	}
+
+	UserDao udao = new UserDao();
+	udao.connect();
+	int result = udao.addCompleteUserDetail(ub);
+	
+	if(result == 1) 
+	{ 
+		session.setAttribute("result","User Successfully Updated!"); 
+		response.sendRedirect("newUserForm.jsp"); 
+	} 
+	else 
+	{
+		session.setAttribute("result","User Update failed!"); 
+		response.sendRedirect("newUserForm.jsp");
+	}
 	
 	
 		

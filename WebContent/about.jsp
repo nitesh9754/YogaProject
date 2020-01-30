@@ -31,6 +31,13 @@
 	<link rel="stylesheet" href="css/owl.carousel.css">
 	<link rel="stylesheet" href="css/jquery-ui.css">
 	<link rel="stylesheet" href="css/main.css">
+	
+	<style>
+	
+	a_css:hover{
+	color: green;
+	}
+	</style>
 
 </head>
 
@@ -49,7 +56,32 @@
 						</ul>
 					</div>
 					<div class="col-lg-6 col-sm-6 col-4 header-top-right no-padding">
-					<label ><%= session.getAttribute("username") %></label>
+					<%
+						String userId = (String)request.getSession().getAttribute("username");
+						System.out.println("== >> "+userId);
+						
+						if(userId == null)
+						{
+							%>
+								<label></label>
+							<%
+						}
+						else if(userId.equals(""))
+						{
+							%>
+								<label></label>
+							<%
+						}
+						else
+						{
+							%>
+								
+								<a href="logout.jsp" onMouseOver="this.style.color='#0093df'" onMouseOut="this.style.color='black'">Logout </a>
+								<label> ( <%= session.getAttribute("username") %> )</label>
+							<%
+						}
+					
+					%>
 						<a href="tel:+880 1234 654 953">
 							<span class="text">+880 1234 654 953</span>
 						</a>
@@ -82,9 +114,30 @@
 							</ul>
 						</li>
 						<li><a href="contact.jsp">Contact</a></li>
-						<li><a href="login.jsp">Login</a></li>
-						<li><a href="register.jsp#toregister">New User</a></li>
-						<li><a href="newUserForm.jsp">Test</a></li>
+						
+					<%
+						if(userId == null)
+						{
+							%>
+								<li><a href="login.jsp">Login</a></li>
+								<li><a href="register.jsp#toregister">New User</a></li>
+							<%
+						}
+						else if(userId.equals(""))
+						{
+							%>
+								<li><a href="login.jsp">Login</a></li>
+								<li><a href="register.jsp#toregister">New User</a></li>								
+							<%
+						}
+						else
+						{
+							%>
+								<li><a href="newUserForm.jsp">Add Detail</a></li>
+							<%
+						}
+					%>
+
 					</ul>
 				</nav><!-- #nav-menu-container -->
 			</div>
