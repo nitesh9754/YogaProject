@@ -10,20 +10,7 @@
 </head>
 <body>
 <% 
-	String firstName=request.getParameter("firstname"); 
-	String lastName=request.getParameter("lastname");
-	String suitableTime=request.getParameter("suitabletime");
-	String mobilePhone=request.getParameter("phone"); 
-	String address=request.getParameter("address");
-	String comment=request.getParameter("comment");
-		
- 	System.out.println("firstName " + firstName);
- 	System.out.println("lastName " + lastName);
- 	System.out.println("suitableTime " + suitableTime);
- 	System.out.println("mobilePhone " + mobilePhone);
- 	System.out.println("address " + address);
- 	System.out.println("comment " + comment);
-
+	
 	UserBean ub = new UserBean();
 	ub.setUserid(session.getAttribute("username").toString());
 	ub.setFirstname(request.getParameter("firstname"));
@@ -32,6 +19,8 @@
 	ub.setAddress(request.getParameter("address"));
 	ub.setComment(request.getParameter("comment"));
 	ub.setSuitableTime(request.getParameter("suitabletime"));
+	ub.setGender(request.getParameter("gender"));
+	ub.setDob(request.getParameter("dob"));
 	
 
 	UserDao udao = new UserDao();
@@ -41,12 +30,12 @@
 	if(result == 1) 
 	{ 
 		session.setAttribute("result","User Successfully Updated!"); 
-		response.sendRedirect("newUserForm.jsp"); 
+		response.sendRedirect("newUserForm.jsp?result=1"); 
 	} 
 	else 
 	{
 		session.setAttribute("result","User Update failed!"); 
-		response.sendRedirect("newUserForm.jsp");
+		response.sendRedirect("newUserForm.jsp?result=0");
 	}
 	
 	

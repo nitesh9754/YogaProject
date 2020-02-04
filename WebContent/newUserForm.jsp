@@ -1,3 +1,5 @@
+<%@page import="com.yoga.dao.UserDao"%>
+<%@page import="com.yoga.bean.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -56,8 +58,101 @@
 					<div class="col-lg-6 col-sm-6 col-4 header-top-right no-padding">
 					
 					<%
+					
+					
 						String userId = (String)request.getSession().getAttribute("username");
 						System.out.println("== >> "+userId);
+						
+						UserDao udao = new UserDao();
+						udao.connect();
+						UserBean ub = udao.getRegisteredUserData(session.getAttribute("username").toString());
+						
+						
+						if(ub.getFirstname() == null)
+						{
+							request.setAttribute("firstname", "");
+						}
+						else
+						{
+							request.setAttribute("firstname", ub.getFirstname());	
+						}
+						
+						if(ub.getLastname() == null)
+						{
+							request.setAttribute("lastname", "");
+						}
+						else
+						{
+							request.setAttribute("lastname", ub.getLastname());	
+						}
+							
+						if(ub.getMobile() == null)
+						{
+							request.setAttribute("phone", "");
+							
+						}
+						else
+						{
+							request.setAttribute("phone", ub.getMobile());
+						}
+						
+						if(ub.getAddress() == null)
+						{
+							request.setAttribute("address", "");
+						}
+						else
+						{
+							request.setAttribute("address", ub.getAddress());	
+						}
+						
+						if(ub.getComment() == null)
+						{
+							request.setAttribute("comment", "");
+						}
+						else
+						{
+							request.setAttribute("comment", ub.getComment());
+						}
+						
+						if(ub.getSuitableTime() == null)
+						{
+							request.setAttribute("suitabletime", "");
+						}
+						else
+						{
+							request.setAttribute("suitabletime", ub.getSuitableTime());
+						}
+						
+						if(ub.getAddress() == null)
+						{
+							request.setAttribute("address", "");
+						}
+						else
+						{
+							request.setAttribute("address", ub.getAddress());	
+						}
+						
+						
+						System.out.println("== >> "+userId +" >>>>>> "+ub.getDob());
+						if(ub.getDob() == null)
+						{
+							request.setAttribute("dob", "");
+						}
+						else
+						{
+							request.setAttribute("dob", ub.getDob());	
+						}
+						
+						if(ub.getGender() == null)
+						{
+							request.setAttribute("gender", "");
+						}
+						else
+						{
+							request.setAttribute("gender", ub.getGender());	
+						}
+						
+						
 						
 						if(userId == null)
 						{
@@ -163,64 +258,74 @@
 	</section>
 	<!-- End banner Area -->
 
+
 	<!-- Start contact-page Area -->
+-
 	<section class="contact-page-area section-gap">
+	
 		<div class="container">
+
 			<div class="row">
 
 
+
 	      <div  class="form">
+<!-- 		<label>hello112</label>	       -->
             <form id="contactform" action="addCompleteDetail.jsp">
                 <p class="contact"><label for="fname">First Name</label></p>
-                <input id="firstname" name="firstname" required="" tabindex="1" type="text">
+                <input id="firstname" name="firstname" required="" tabindex="1" type="text" value="<%= request.getAttribute("firstname")%>">
                 
                 <p class="contact"><label for="lname">Last Name</label></p>
-                <input id="lastname" name="lastname" required="" type="text">
+                <input id="lastname" name="lastname" required="" type="text" value="<%= request.getAttribute("lastname")%>">
                 
                 <p class="contact"><label for="Time">Suitable Time</label></p>
-                <input id="suitabletime" name="suitabletime" required="" tabindex="2" type="text">
+<%--                 <input id="suitabletime" name="suitabletime" required="" tabindex="2" type="text"  value="<%= request.getAttribute("suitabletime")%>"> --%>
                 
+                <input type="time" id="suitabletime" name="suitabletime" required style = "width:400px;" value="<%= request.getAttribute("suitabletime")%>">
+                
+               <p class="contact"><label for="Time">DOB</label></p>
+               <input type="date" id="dob" name="dob" style = "width:400px;" min="1955-01-01" max="2015-12-31" value="<%= request.getAttribute("dob")%>">
                
-               <fieldset>
-                 <label>Birthday</label>
-                  <label class="month">
-                  <select class="select-style" name="BirthMonth">
-                  <option value="">Month</option>
-                  <option  value="01">January</option>
-                  <option value="02">February</option>
-                  <option value="03" >March</option>
-                  <option value="04">April</option>
-                  <option value="05">May</option>
-                  <option value="06">June</option>
-                  <option value="07">July</option>
-                  <option value="08">August</option>
-                  <option value="09">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12" >December</option>
-                 </select> </label>
+<!--                <fieldset> -->
+<!--                  <label>Birthday</label> -->
+<!--                   <label class="month"> -->
+<!--                   <select class="select-style" name="BirthMonth"> -->
+<!--                   <option value="">Month</option> -->
+<!--                   <option  value="01">January</option> -->
+<!--                   <option value="02">February</option> -->
+<!--                   <option value="03" >March</option> -->
+<!--                   <option value="04">April</option> -->
+<!--                   <option value="05">May</option> -->
+<!--                   <option value="06">June</option> -->
+<!--                   <option value="07">July</option> -->
+<!--                   <option value="08">August</option> -->
+<!--                   <option value="09">September</option> -->
+<!--                   <option value="10">October</option> -->
+<!--                   <option value="11">November</option> -->
+<!--                   <option value="12" >December</option> -->
+<!--                  </select> </label> -->
                  
-                <label style="margin-left: -25px;">Day<input class="birthday" maxlength="2" name="BirthDay" required=""></label>
-                <label>Year <input class="birthyear" maxlength="4" name="BirthYear" required=""></label>
-              </fieldset>
+<!--                 <label style="margin-left: -25px;">Day<input class="birthday" maxlength="2" name="BirthDay" required=""></label> -->
+<!--                 <label>Year <input class="birthyear" maxlength="4" name="BirthYear" required=""></label> -->
+<!--               </fieldset> -->
             
             <select class="select-style gender" name="gender">
             <option value="select">i am..</option>
             <option value="m">Male</option>
             <option value="f">Female</option>
-            <option value="others">Other</option>
+            <option value="o">Other</option>
             </select><br>
             
             <p class="contact"><label for="mobilephone">Mobile phone</label></p>
-            <input id="phone" name="phone" required="" type="text">
+            <input id="phone" name="phone" required="" type="text" value="<%= request.getAttribute("phone")%>">
             
             <p class="comment"><label for="address">Address</label></p> 
-            <textarea id="address" name="address" rows="3" style="width: 400px;"></textarea>
+            <textarea id="address" name="address" rows="3" style="width: 400px;"><%= request.getAttribute("address")%></textarea>
             
             <p class="comment"><label for="phone">Comment</label></p> 
-            <textarea id="comment" name="comment" rows="3" style="width: 400px;"></textarea>
+            <textarea id="comment" name="comment" rows="3" style="width: 400px;" ><%= request.getAttribute("comment")%></textarea>
             <br>
-            <input class="submit" type ="submit" value ="Submit" style ="width: 100px; background-color: #0093df; color:white; border: none; "/>
+            <input class="submit" type ="submit" value ="Submit" style ="width: 100px; background-color: #0093df; color:white; border: none; margin-top: 10px; "/>
 <!--             <input class="buttom" name="submit" id="submit" tabindex="5" value="Sign me up!" type="submit">    -->
    </form>
    

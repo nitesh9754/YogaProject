@@ -120,14 +120,16 @@ public class UserDao {
 		
 		try 
 		{
-			pstmt = con.prepareStatement("update userdetail set firstname = ?, lastname = ?, mobile = ?, address = ?, u_comment = ?, suitable_time = ? where userid = ?");
+			pstmt = con.prepareStatement("update userdetail set firstname = ?, lastname = ?, mobile = ?, address = ?, u_comment = ?, suitable_time = ?, dob =?, gender = ? where userid = ?");
 			pstmt.setString(1, user.getFirstname());
 			pstmt.setString(2, user.getLastname());
 			pstmt.setString(3, user.getMobile());
 			pstmt.setString(4, user.getAddress());
 			pstmt.setString(5, user.getComment());
 			pstmt.setString(6, user.getSuitableTime());
-			pstmt.setString(7, user.getUserid());
+			pstmt.setString(7, user.getDob());
+			pstmt.setString(8, user.getGender());
+			pstmt.setString(9, user.getUserid());
 			
 			
 			row = pstmt.executeUpdate();
@@ -149,6 +151,32 @@ public class UserDao {
 		}
 		
 		return row;
+	}
+	
+	public UserBean getRegisteredUserData(String userid) throws SQLException
+	{
+		System.out.println(" getRegisteredUserData ---------------- 1 ");
+		String query = "select firstname, lastname, mobile, address, u_comment, suitable_time, dob, gender from userdetail where userid = ?";
+		System.out.println(" getRegisteredUserData ---------------- 2 "+query);
+		pstmt = con.prepareStatement(query);
+		pstmt.setString(1, userid);
+		rs = pstmt.executeQuery();
+		
+		UserBean ub = new UserBean();
+		while (rs.next()) {
+			
+			System.out.println(" getRegisteredUserData ---------------- 3 ");
+			ub.setFirstname(rs.getString("firstname"));
+			ub.setLastname(rs.getString("lastname"));
+			ub.setSuitableTime(rs.getString("suitable_time"));
+			ub.setMobile(rs.getString("mobile"));
+			ub.setDob(rs.getString("dob"));
+			ub.setGender(rs.getString("gender"));
+			ub.setAddress(rs.getString("address"));
+			ub.setComment(rs.getString("u_comment"));
+		}
+		return ub;
+		
 	}
 	
 }
